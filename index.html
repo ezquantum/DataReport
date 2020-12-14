@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mechanical Equipment Pricing Dashboard</title>
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sb_static.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png"/>
+
+    <style>
+        #monthly-volume-chart g.y {
+            display: none;
+        }
+        #logo {
+            margin-right: 2em;
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="kpi">
+     <h2 title="Version number: 5.0">Mechanical Equipment Pricing Dashboard <a href="javascript:window.print()" title="Print to PDF" class="no-print"><i class="icon icon-file-type icon-file-type-pdf">PDF</i></a></h2>
+
+ <div id="sidebar" class="no-print">
+    <div class="row">
+    <div id="equipment-type-select">
+        <strong>Filter by Equipment Type</strong>
+        <a class="reset" href="javascript:equipmentTypeSelect.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="motor-hp1-select">
+        <strong>Filter by Motor HP1</strong>
+        <a class="reset" href="javascript:motorHP1Select.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="tag-select">
+        <strong>Filter by Tag</strong>
+        <a class="reset" href="javascript:processTag.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+    <div class="clearfix"></div>
+    </div>
+    <div id="material-select">
+        <strong>Filter by Material</strong>
+        <a class="reset" href="javascript:materialSelect.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="row">
+    <div id="process-select">
+        <strong>Filter by Process</strong>
+        <a class="reset" href="javascript:processSelect.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+    <div id="vendor-select">
+        <strong>Filter by Vendor</strong>
+        <a class="reset" href="javascript:vendorSelect.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+<div id="main_content">
+<div class="row">
+    <div id="cumulative-cost-by-select">
+    </div>  
+    <p class="muted pull-right" style="margin-right: 15px;">select a time range to zoom in</p>
+</div>
+<div class="row">
+    <div id="cumulative-monthly-move-chart">
+        <strong>Monthly Cost Average/Sum</strong>
+        <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+        <a class="reset" href="javascript:cumulativeCostMoveChart.filterAll();cumulativeCostVolumeChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="row">
+    <div id="yearly-bubble-chart" class="dc-chart">
+        <strong>Yearly Performance</strong> (radius: amount of records, color: current cost - estimate cost)
+        <a class="reset" href="javascript:yearlyBubbleChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="over-under-chart">
+        <strong>Underestimate or overestimate?</strong>
+        <a class="reset" href="javascript:overOrUnderChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="quarter-chart">
+        <strong>Dollars by Quarters</strong>
+        <a class="reset" href="javascript:quarterChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="project-number-chart">
+        <strong>Filter by Project Number (Project Title)</strong>
+        <a class="reset" href="javascript:projectNumberChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="avg-tag-chart">
+        <strong>Actual Price by Tag</strong>
+        <a class="reset" href="javascript:pricebyTagChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+        <div id="sum-process-chart">
+        <strong>Cumulative Process Cost</strong>
+        <a class="reset" href="javascript:sumProcessChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+        <div id="avg-equipment-type-chart">
+        <strong>Average Actual Price by Equipment Type</strong>
+        <a class="reset" href="javascript:avgPricebyEquipmentTypeChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+        <div id="avg-vendor-chart">
+        <strong>Average Cost Per Vendor</strong>
+        <a class="reset" href="javascript:avgVendorChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+<div class="row">
+    <div>
+        <div class="dc-data-count">
+            <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
+                href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+        </div>
+    </div>
+    <table class="table table-hover dc-data-table">
+    </table>
+    </div>
+</div>
+</div>
+<!-- below is under development -->
+<!-- <div class="container" id="cost">
+<div class="row">
+        <div id="project-cost-chart">
+        <strong>Project Cost Analysis</strong>
+        <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+        <a class="reset" href="projectCostVolumeChart.filterAll();dc.redrawAll();"
+           style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+</div> -->
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/d3_s_n_b_plus.js"></script>
+<script type="text/javascript" src="js/colorbrewer.js"></script>
+<script type="text/javascript" src="sb_kpi_table.js"></script>
+
+</body>
+</html>
